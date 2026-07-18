@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Для тебя ❤️</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#ffe6eb;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    text-align:center;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    max-width:500px;
+    width:100%;
+    box-shadow:0 5px 20px rgba(0,0,0,0.15);
+}
+
+h1{
+    color:#e63946;
+}
+
+p{
+    font-size:18px;
+    line-height:1.6;
+}
+
+button{
+    margin-top:20px;
+    padding:12px 25px;
+    border:none;
+    border-radius:30px;
+    background:#e63946;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:0.9;
+}
+
+.hidden{
+    display:none;
+}
+
+.envelope{
+    font-size:80px;
+    margin-bottom:15px;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+
+    <div id="page1">
+        <div class="envelope">💌</div>
+        <h1>Для тебя</h1>
+        <p>У меня есть небольшое письмо для тебя.</p>
+        <button onclick="nextPage(1,2)">Открыть</button>
+    </div>
+
+    <div id="page2" class="hidden">
+        <h1>❤️</h1>
+        <p>
+            Иногда мне кажется, что обычных слов недостаточно,
+            чтобы описать то, насколько ты важна для меня.
+        </p>
+        <button onclick="nextPage(2,3)">Дальше</button>
+    </div>
+
+    <div id="page3" class="hidden">
+        <h1>✨</h1>
+        <p>
+            Ты делаешь мои дни лучше просто тем,
+            что есть в моей жизни.
+        </p>
+        <button onclick="nextPage(3,4)">Ещё немного</button>
+    </div>
+
+    <div id="page4" class="hidden">
+        <h1>❤️</h1>
+        <p>
+            И поэтому я хочу сказать тебе самое главное:
+            <br><br>
+            <strong>Я люблю тебя больше всего на свете, мой лисеночек, прошу прости меня за все мои ошибки, ты единственный лучик солнца в моей жизни <3.</strong>
+        </p>
+    </div>
+
+</div>
+
+<script>
+function nextPage(current, next){
+    document.getElementById("page" + current).classList.add("hidden");
+    document.getElementById("page" + next).classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
