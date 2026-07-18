@@ -6,105 +6,202 @@
 <title>Для тебя ❤️</title>
 
 <style>
-body{
+*{
     margin:0;
-    font-family:Arial, sans-serif;
-    background:#ffe6eb;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    height:100vh;
+    overflow:hidden;
     display:flex;
     justify-content:center;
     align-items:center;
-    height:100vh;
-    text-align:center;
-    padding:20px;
+    background:linear-gradient(-45deg,#520012,#8b0022,#6d001a,#35000c);
+    background-size:400% 400%;
+    animation:bg 12s ease infinite;
+}
+
+@keyframes bg{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
 }
 
 .card{
-    background:white;
-    padding:30px;
-    border-radius:20px;
-    max-width:500px;
-    width:100%;
-    box-shadow:0 5px 20px rgba(0,0,0,0.15);
-}
-
-h1{
-    color:#e63946;
-}
-
-p{
-    font-size:18px;
-    line-height:1.6;
-}
-
-button{
-    margin-top:20px;
-    padding:12px 25px;
-    border:none;
-    border-radius:30px;
-    background:#e63946;
+    width:90%;
+    max-width:450px;
+    padding:35px;
+    text-align:center;
+    background:rgba(20,20,20,0.95);
     color:white;
-    font-size:16px;
-    cursor:pointer;
+    border-radius:25px;
+    box-shadow:0 0 25px rgba(0,0,0,.4);
+    position:relative;
+    z-index:10;
 }
 
-button:hover{
-    opacity:0.9;
-}
-
-.hidden{
+.page{
     display:none;
+    animation:fade .8s ease;
+}
+
+.page.active{
+    display:block;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 .envelope{
-    font-size:80px;
+    font-size:90px;
+    margin-bottom:20px;
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.08);}
+}
+
+h1{
     margin-bottom:15px;
+}
+
+p{
+    line-height:1.7;
+    font-size:18px;
+}
+
+button{
+    margin-top:25px;
+    border:none;
+    background:#ff3d6e;
+    color:white;
+    padding:12px 28px;
+    border-radius:30px;
+    cursor:pointer;
+    font-size:16px;
+    transition:.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+.heart{
+    position:fixed;
+    bottom:-50px;
+    color:#ff6b8a;
+    animation:fly linear forwards;
+    pointer-events:none;
+}
+
+@keyframes fly{
+    from{
+        transform:translateY(0);
+        opacity:1;
+    }
+    to{
+        transform:translateY(-110vh);
+        opacity:0;
+    }
 }
 </style>
 </head>
+
 <body>
 
 <div class="card">
 
-    <div id="page1">
+    <div class="page active" id="page1">
         <div class="envelope">💌</div>
         <h1>Для тебя</h1>
         <p>У меня есть небольшое письмо для тебя.</p>
-        <button onclick="nextPage(1,2)">Открыть</button>
+        <button onclick="showPage(2)">Открыть</button>
     </div>
 
-    <div id="page2" class="hidden">
+    <div class="page" id="page2">
         <h1>❤️</h1>
         <p>
             Иногда мне кажется, что обычных слов недостаточно,
             чтобы описать то, насколько ты важна для меня.
         </p>
-        <button onclick="nextPage(2,3)">Дальше</button>
+        <button onclick="showPage(3)">Дальше</button>
     </div>
 
-    <div id="page3" class="hidden">
+    <div class="page" id="page3">
         <h1>✨</h1>
         <p>
             Ты делаешь мои дни лучше просто тем,
             что есть в моей жизни.
         </p>
-        <button onclick="nextPage(3,4)">Ещё немного</button>
+        <button onclick="showPage(4)">Ещё немного</button>
     </div>
 
-    <div id="page4" class="hidden">
-        <h1>❤️</h1>
+    <div class="page" id="page4">
+        <h1>💖</h1>
         <p>
             И поэтому я хочу сказать тебе самое главное:
             <br><br>
-            <strong>Я люблю тебя больше всего на свете, мой лисеночек, прошу прости меня за все мои ошибки, ты единственный лучик солнца в моей жизни <3.</strong>
+            <strong>
+            Я люблю тебя больше всего на свете, мой лисёночек.
+            <br><br>
+            Спасибо тебе за всё ❤️
+            </strong>
         </p>
     </div>
 
 </div>
 
 <script>
-function nextPage(current, next){
-    document.getElementById("page" + current).classList.add("hidden");
-    document.getElementById("page" + next).classList.remove("hidden");
+function showPage(page){
+    document.querySelectorAll('.page').forEach(p=>{
+        p.classList.remove('active');
+    });
+
+    document.getElementById('page'+page).classList.add('active');
+
+    if(page === 4){
+        startHearts();
+    }
+}
+
+let heartsStarted = false;
+
+function startHearts(){
+
+    if(heartsStarted) return;
+    heartsStarted = true;
+
+    setInterval(()=>{
+
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = '❤';
+
+        heart.style.left = Math.random()*100 + 'vw';
+        heart.style.fontSize = (15 + Math.random()*25) + 'px';
+        heart.style.animationDuration =
+            (4 + Math.random()*4) + 's';
+
+        document.body.appendChild(heart);
+
+        setTimeout(()=>{
+            heart.remove();
+        },8000);
+
+    },300);
 }
 </script>
 
